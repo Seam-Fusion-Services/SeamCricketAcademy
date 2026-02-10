@@ -60,7 +60,8 @@
         },
         {
             "title": "Side-Arm Throw Down Sessions",
-            "desc": "High-intensity throwdown sessions for serious batting drills."
+            "desc": "High-intensity throwdown sessions for serious batting drills.",
+            "timing": "Flexible"
         },
         {
             "title": "Bowling Machine Sessions",
@@ -129,7 +130,7 @@
         {
             "age": "NA",
             "program": "Nets with Bowling Machine",
-            "timing": "NA",
+            "timing": "Flexible",
             "period": "NA"
         }
     ],
