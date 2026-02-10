@@ -81,6 +81,14 @@ const programs = [
         newBatch: true
     },
     {
+        title: "Open Net and Practice Matches",
+        desc: "Book open net sessions or join practice matches to sharpen your game in a competitive environment.",
+        timing: "Flexible",
+        icon: "🏏",
+        featured: false,
+        newBatch: true
+    },
+    {
         title: "Annual Camp (For Kids 5+ yrs)",
         desc: "A structured 10-month program for young aspiring cricketers.",
         ageGroup: "5 yrs and above",
@@ -117,7 +125,7 @@ const regularPrograms = programs.filter(p => !p.newBatch);
         </div>
 
         <!-- Content -->
-        <div class="relative z-10 p-8 lg:p-12 grid lg:grid-cols-3 gap-8">
+        <div class="relative z-10 p-8 lg:p-12 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {newBatches.map((program) => (
                 <div class="program-card relative group">
                     <div class="h-full glass-panel p-8 transition-all duration-500 hover:border-amber-500/50 border-amber-500/20 bg-black/40 flex flex-col">
