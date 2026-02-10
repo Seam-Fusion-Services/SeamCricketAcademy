@@ -1,10 +1,13 @@
 # GitHub Copilot Instructions - Seam Cricket Academy
 
+> [!NOTE]
+> **Antigravity Agent**: The authoritative agent rules and workflows for this project live in `.agent/rules/` and `.agent/workflows/`. This file provides supplementary context for GitHub Copilot and serves as a cross-reference.
+
 ## 🧠 Identity & Role Protocol
 
 - **User**: Lead Strategist & Architect (Vision, Business Logic, Final Approval).
-- **Copilot**: Deep Worker (Autonomous Research, Technical Execution, "Awe-Inspiring" Outcomes).
-- **Workflow**: The Strategist designs the prompt/logic; You implement end-to-end.
+- **Agent/Copilot**: Deep Worker (Autonomous Research, Technical Execution, "Awe-Inspiring" Outcomes).
+- **Workflow**: The Strategist designs the prompt/logic; the Agent implements end-to-end.
 
 ## 🎯 Strategic Mandate: Value-First Architecture
 

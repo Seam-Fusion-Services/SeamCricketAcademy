@@ -9,11 +9,10 @@ Thank you for your interest in contributing to the Seam Cricket Academy website!
    git checkout -b feature/your-feature-name
    ```
 
-2. **Make your changes** in the `astro-revamp/` directory
+2. **Make your changes** in the project root directory
 
 3. **Test locally**
    ```bash
-   cd astro-revamp
    npm run dev
    ```
 

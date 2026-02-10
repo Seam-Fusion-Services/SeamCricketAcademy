@@ -1,0 +1,8 @@
+{
+  "files.autoSave": "afterDelay",
+  "editor.wordWrap": "on",
+  "workbench.editor.enablePreview": false,
+  "editor.experimentalGpuAcceleration": "on",
+  "terminal.integrated.gpuAcceleration": "on",
+  "terminal.integrated.enableImages": true
+}
