@@ -97,3 +97,22 @@ Use for bug reports:
 - Verification performed:
 - Risk/rollback notes:
 ```
+
+## 9. Strict Deployment Governance
+
+**CRITICAL PROTOCOL**: The agent is **FORBIDDEN** from combining "Commit" and "Push/Deploy" in a single turn.
+
+1.  **Separation of Concerns**:
+    - **Step 1 (Work)**: Edit code -> Verify (Build/Test) -> Commit. -> **STOP**.
+    - **Step 2 (Report)**: Summarize changes. Ask: *"Ready to push/deploy?"*
+    - **Step 3 (Deploy)**: ONLY after explicit user confirmation in a **new chat turn**, run the push/deploy commands.
+
+2.  **Context Awareness (Anti-Blunder)**:
+    - **Before creating a branch/PR**: Run `gh issue list` and `gh pr list` to check for existing work.
+    - **Before pushing**: Check `git status` and `git log` to ensure you aren't overwriting remote work.
+    - **Zero Clutter**: After merging a PR, immediately delete the local and remote feature branches.
+
+3.  **Autonomous Governance**:
+    - Use GitHub Issues/PRs for all non-trivial changes.
+    - **Do not** push directly to `main` for features. Use the `/pr` workflow.
+    - **Do not** mention "AI" or "Agent" in any PRs, Issues, or Commits.

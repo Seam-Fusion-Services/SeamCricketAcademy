@@ -1,32 +1,22 @@
 ---
-description: Git commit, push to main, and monitor GitHub Actions deployment
+description: Deploy changes to production (with strict governance)
 ---
 
-## Steps
+1. **Verify State**
+   - Check `git status` (Must be clean).
+   - Check `git branch --show-current` (Must be `main`).
+   - Run `gh pr list --state open` (Ensure no open PRs conflicting).
 
-1. First, run the `/build-verify` workflow to ensure the build passes.
+2. **Pull Updates**
+   - `git pull`
 
-// turbo
-2. Check git status for changed files:
-   ```powershell
-   cd d:\html-seamcricketacademy && git status --short
-   ```
+3. **Verify Build**
+   - `npm run build` (Husky check ensures this, but verify again).
+   
+4. **Approval Check**
+   - Ask: *"About to push to production. Are you sure?"*
+   - **STOP**. Wait for explicit confirmation.
 
-3. **Ask the user** for the commit message, or use the provided one. Stage and commit:
-   ```powershell
-   cd d:\html-seamcricketacademy && git add -A && git commit -m "type: description"
-   ```
-
-4. Push to `main`:
-   ```powershell
-   cd d:\html-seamcricketacademy && git push origin main
-   ```
-
-5. Report:
-   - Commit hash.
-   - Files changed.
-   - Push status.
-   - Remind the user to check GitHub Actions: https://github.com/seamcricketacademy-png/html-seamcricketacademy/actions
-
-> [!WARNING]
-> Never force-push or rewrite history without explicit user approval.
+5. **Deploy**
+   - Run `git push origin main`
+   - Report: "✅ Deployed to version [hash]. Check live site."

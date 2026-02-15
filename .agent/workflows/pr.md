@@ -5,28 +5,24 @@ description: Create a GitHub Pull Request with smart description & stealth mode
 1. Preparation
    - Check status: `git status` (Ensure working tree is clean or commit changes).
    - Check current branch: `git branch --show-current`. (Must NOT be `main`).
+   - **Context Check**: Run `gh issue list --limit 5` and `gh pr list --limit 5`. Ensure no overlap.
 
-2. Push Branch (If needed)
+2. Push Branch
    - Push current HEAD: `git push origin HEAD --force-with-lease`
 
 3. Generate Stealth PR Details
-   - **Analyze Changes**: `git diff main...HEAD --stat` and `git log main...HEAD --oneline`
-   - **Formulate Title**: Conventional Commit style (e.g., `feat: integrate stripe payment gateway`)
-   - **Formulate Body**:
-     - **Summary**: Concise description of *what* changed and *why*.
-     - **Key Changes**: Bullet points of major diffs.
-     - **Verification**: How to test (e.g., "Tested checkout flow on localhost").
-     - **Stealth Constraint**: **NEVER** mention "AI", "LLM", "Agent", or "Antigravity". Write as a senior engineer.
+   - **Analyze Changes**: `git diff main...HEAD --stat`
+   - **Formulate Title & Body**: Professional, senior engineer tone. NO AI mentions.
 
 4. Create PR on GitHub
-   - Run `gh pr create --title "<Generated Title>" --body "<Generated Body>" --web`
-   - Wait for browser confirmation or output link.
+   - Run `gh pr create --web` (or via flag).
+   
+5. **STOP**:
+   - Report: "✅ PR Created: [Link]. Ready for your review."
+   - **DO NOT MERGE**. Wait for user instruction.
 
-5. Update Changelog (Pre-merge step)
-   - Read `CHANGELOG.md`
-   - Append new entry under "Unreleased" or create new version header if it's a release PR.
-   - Commit changelog change: `git commit -am "docs: update changelog"`
-   - Push again: `git push origin HEAD`
-
-6. Final Confirmation
-   - Report: "✅ PR Created: [Link]. Ready for review/merge."
+6. Post-Merge Cleanup (Run ONLY when user says "Merge PR"):
+   - `gh pr merge <PR-ID> --merge --delete-branch`
+   - `git checkout main`
+   - `git pull`
+   - Report: "✅ Merged and synced."
