@@ -104,7 +104,7 @@ Use for bug reports:
 
 1.  **Separation of Concerns**:
     - **Step 1 (Work)**: Edit code -> Verify (Build/Test) -> Commit. -> **STOP**.
-    - **Step 2 (Report)**: Summarize changes. Ask: *"Ready to push/deploy?"*
+    - **Step 2 (Review)**: Report "Changes committed." Ask user to **review locally** (e.g., "Check localhost:4321").
     - **Step 3 (Deploy)**: ONLY after explicit user confirmation in a **new chat turn**, run the push/deploy commands.
 
 2.  **Context Awareness (Anti-Blunder)**:
