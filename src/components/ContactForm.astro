@@ -242,3 +242,101 @@ import { programs } from "../data/programs";
     </div>
   </div>
 </div>
+
+<script>
+  const container = document.getElementById("custom-select-container");
+  const trigger = document.getElementById("select-trigger");
+  const optionsMenu = document.getElementById("select-options");
+  const options = document.querySelectorAll(".option-item");
+  const input = document.getElementById("program-input") as HTMLInputElement;
+  const selectedText = document.getElementById("selected-text");
+  const arrow = trigger?.querySelector("svg");
+
+  const scrollIndicator = document.getElementById("scroll-indicator");
+
+  let isOpen = false;
+
+  function checkScroll() {
+    if (!optionsMenu) return;
+    const { scrollTop, scrollHeight, clientHeight } = optionsMenu;
+    // Show indicator if not at bottom and content overflows
+    if (
+      scrollHeight > clientHeight &&
+      scrollTop + clientHeight < scrollHeight - 10
+    ) {
+      scrollIndicator?.classList.remove("opacity-0", "invisible");
+    } else {
+      scrollIndicator?.classList.add("opacity-0", "invisible");
+    }
+  }
+
+  function toggleDropdown() {
+    isOpen = !isOpen;
+    if (isOpen) {
+      optionsMenu?.classList.remove("opacity-0", "invisible", "-translate-y-2");
+      optionsMenu?.classList.add("opacity-100", "visible", "translate-y-0");
+      arrow?.classList.add("rotate-180");
+      trigger?.classList.add("border-neon/50", "bg-white/10");
+
+      // Check scroll initially when opening
+      setTimeout(checkScroll, 100);
+    } else {
+      optionsMenu?.classList.add("opacity-0", "invisible", "-translate-y-2");
+      optionsMenu?.classList.remove("opacity-100", "visible", "translate-y-0");
+      arrow?.classList.remove("rotate-180");
+      trigger?.classList.remove("border-neon/50", "bg-white/10");
+      scrollIndicator?.classList.add("opacity-0", "invisible");
+    }
+  }
+
+  // Scroll listener
+  optionsMenu?.addEventListener("scroll", checkScroll);
+
+  trigger?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleDropdown();
+  });
+
+  options.forEach((option) => {
+    option.addEventListener("click", () => {
+      const value = option.getAttribute("data-value");
+      const text = option.textContent;
+
+      if (input) input.value = value || "";
+      if (selectedText && text) {
+        selectedText.textContent = text;
+        selectedText.classList.remove("text-white/30");
+        selectedText.classList.add("text-white");
+      }
+
+      // Visual selection state
+      options.forEach((opt) => opt.classList.remove("bg-neon/20", "text-neon"));
+      option.classList.add("bg-neon/20", "text-neon");
+
+      toggleDropdown();
+    });
+  });
+
+  // Close on click outside
+  document.addEventListener("click", (e) => {
+    if (container && !container.contains(e.target as Node)) {
+      if (isOpen) toggleDropdown();
+    }
+  });
+</script>
+
+<style>
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+</style>
