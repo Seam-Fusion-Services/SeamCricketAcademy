@@ -1,10 +1,24 @@
 ---
 import academy from '../data/academy.json';
+import { fetchWebsiteContent } from '../lib/seamfusion-api';
+
+// Static defaults from academy.json
+let testimonials = academy.testimonials;
+
+// Override with CMS content if available
+try {
+    const content = await fetchWebsiteContent();
+    if (content?.testimonials && Array.isArray(content.testimonials) && (content.testimonials as unknown[]).length > 0) {
+        testimonials = content.testimonials as typeof testimonials;
+    }
+} catch {
+    // Silent — static data already loaded
+}
 ---
 <div class="relative">
     <!-- Stacked cards effect -->
     <div class="space-y-6">
-        {academy.testimonials.map((testimonial, i) => (
+        {testimonials.map((testimonial, i) => (
             <div
                 class="group glass-panel p-8 md:p-10 border-l-4 border-amber-500/50 hover:border-amber-500 transition-all duration-300 hover:scale-[1.01] hover:-translate-x-2 bg-gradient-to-r from-white/5 to-transparent"
                 style={`transform: translateX(${i * 20}px); position: relative; z-index: ${3 - i};`}

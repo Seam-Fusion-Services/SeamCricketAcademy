@@ -12,13 +12,14 @@
 const API_URL = import.meta.env.PUBLIC_API_URL || '';
 const ACADEMY_ID = import.meta.env.PUBLIC_ACADEMY_ID || '';
 
-type Section = 'coaches' | 'programs' | 'branding' | 'gallery';
+type Section = 'coaches' | 'programs' | 'branding' | 'gallery' | 'content';
 
 export interface AcademyData {
   branding?: Record<string, unknown>;
   coaches?: Array<Record<string, unknown>>;
   programs?: Array<Record<string, unknown>>;
   gallery?: Array<Record<string, unknown>>;
+  content?: Record<string, unknown>;
 }
 
 /**
@@ -47,4 +48,22 @@ export async function fetchAcademyData(
     console.warn('[SeamFusion] API fetch failed — using static fallback data');
     return null;
   }
+}
+
+// ── Build-time cache for website content ──
+// Multiple Astro components can call fetchWebsiteContent() and share
+// a single API request during the same build.
+
+let _contentCache: Record<string, unknown> | null | undefined;
+
+/**
+ * Fetch editable website content (hero, about, testimonials, etc.).
+ * Cached per build — safe to call from every component.
+ * Returns null if unavailable; callers should fall back to static data.
+ */
+export async function fetchWebsiteContent(): Promise<Record<string, unknown> | null> {
+  if (_contentCache !== undefined) return _contentCache;
+  const data = await fetchAcademyData(['content']);
+  _contentCache = (data?.content as Record<string, unknown>) ?? null;
+  return _contentCache;
 }

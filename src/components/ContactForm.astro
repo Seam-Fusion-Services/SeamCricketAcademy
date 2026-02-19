@@ -1,6 +1,29 @@
 ---
 import academy from "../data/academy.json";
 import { programs } from "../data/programs";
+import { fetchWebsiteContent } from "../lib/seamfusion-api";
+
+// Contact info — static defaults from academy.json
+let contactAddress = academy.contact.address;
+let contactEmail = academy.contact.email;
+let contactTimings = academy.contact.timings;
+let contactPhone = academy.contact.phone;
+let contactWhatsapp = academy.contact.whatsapp;
+
+// Override with CMS content if available
+try {
+    const content = await fetchWebsiteContent();
+    if (content?.contact) {
+        const c = content.contact as Record<string, string>;
+        if (c.address) contactAddress = c.address;
+        if (c.email) contactEmail = c.email;
+        if (c.timings) contactTimings = c.timings;
+        if (c.phone) contactPhone = c.phone;
+        if (c.whatsapp) contactWhatsapp = c.whatsapp;
+    }
+} catch {
+    // Silent — static data already loaded
+}
 ---
 
 <div class="max-w-2xl mx-auto">
@@ -193,33 +216,33 @@ import { programs } from "../data/programs";
     <div class="grid md:grid-cols-2 gap-6 text-center">
       <div class="flex flex-col items-center gap-2">
         <span class="text-2xl">📍</span>
-        <p class="text-white/50 text-sm">{academy.contact.address}</p>
+        <p class="text-white/50 text-sm">{contactAddress}</p>
       </div>
       <div class="flex flex-col items-center gap-2">
         <span class="text-2xl">📧</span>
         <a
-          href={`mailto:${academy.contact.email}`}
+          href={`mailto:${contactEmail}`}
           class="text-white/50 text-sm hover:text-neon transition-colors"
-          >{academy.contact.email}</a
+          >{contactEmail}</a
         >
       </div>
       <div class="flex flex-col items-center gap-2">
         <span class="text-2xl">🕐</span>
-        <p class="text-white/50 text-sm">{academy.contact.timings}</p>
+        <p class="text-white/50 text-sm">{contactTimings}</p>
       </div>
       <!-- WhatsApp with theme color (not green) -->
       <div class="flex flex-col items-center gap-2">
         <span class="text-2xl">📱</span>
         <div class="flex items-center gap-2">
           <a
-            href={academy.contact.whatsapp}
+            href={contactWhatsapp}
             target="_blank"
             rel="noopener noreferrer"
             class="text-white/50 text-sm hover:text-neon transition-colors"
-            >{academy.contact.phone}</a
+            >{contactPhone}</a
           >
           <a
-            href={academy.contact.whatsapp}
+            href={contactWhatsapp}
             target="_blank"
             rel="noopener noreferrer"
             class="text-neon hover:text-white transition-colors"
