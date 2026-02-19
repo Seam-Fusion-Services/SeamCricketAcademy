@@ -325,6 +325,40 @@ import { programs } from "../data/programs";
   });
 </script>
 
+<script>
+  // SeamFusion: Duplicate inquiry to in-app lead pipeline (fire-and-forget).
+  // Web3Forms POST always proceeds — this fetch runs in parallel and fails silently.
+  (() => {
+    const seamForm = document.querySelector(
+      'form[action*="web3forms"]'
+    ) as HTMLFormElement | null;
+    if (!seamForm) return;
+
+    seamForm.addEventListener("submit", () => {
+      const API_URL = import.meta.env.PUBLIC_API_URL;
+      const ACADEMY_ID = import.meta.env.PUBLIC_ACADEMY_ID;
+      if (!API_URL || !ACADEMY_ID) return;
+
+      const fd = new FormData(seamForm);
+      fetch(`${API_URL}/submitExternalInquiry`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          academyId: ACADEMY_ID,
+          name: String(fd.get("studentName") || ""),
+          contactName: String(fd.get("parentName") || ""),
+          phone: String(fd.get("phone") || ""),
+          email: String(fd.get("email") || ""),
+          programInterest: String(fd.get("program") || ""),
+          message: String(fd.get("message") || ""),
+          source: "website",
+        }),
+      }).catch(() => {});
+      // No preventDefault — Web3Forms submission proceeds normally
+    });
+  })();
+</script>
+
 <style>
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;

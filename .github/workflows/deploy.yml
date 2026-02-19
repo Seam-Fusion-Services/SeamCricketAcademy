@@ -9,6 +9,14 @@ on:
   release:
     types: [published]
 
+  # Rebuild triggered from SeamFusion app (gallery publish, data update)
+  repository_dispatch:
+    types: [rebuild-site]
+
+  # Weekly rebuild to keep data fresh (Monday 3:00 AM UTC)
+  schedule:
+    - cron: '0 3 * * 1'
+
   # Allow manual trigger from Actions tab
   workflow_dispatch:
 
@@ -42,6 +50,9 @@ jobs:
 
       - name: Build Astro site
         run: npm run build
+        env:
+          PUBLIC_ACADEMY_ID: ${{ vars.PUBLIC_ACADEMY_ID }}
+          PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL }}
 
       - name: Copy CNAME to dist
         run: cp CNAME dist/

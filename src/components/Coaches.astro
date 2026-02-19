@@ -1,10 +1,29 @@
 ---
 import academy from '../data/academy.json';
+import { fetchAcademyData } from '../lib/seamfusion-api';
+
+// Try live data from SeamFusion app, fall back to static academy.json
+let trainers = academy.trainers;
+try {
+    const apiData = await fetchAcademyData(['coaches']);
+    if (apiData?.coaches && Array.isArray(apiData.coaches) && apiData.coaches.length > 0) {
+        trainers = apiData.coaches.map((c: Record<string, unknown>) => ({
+            name: (c.displayName as string) || 'Coach',
+            title: Array.isArray(c.specializations) && c.specializations.length > 0
+                ? String(c.specializations[0])
+                : 'Coach',
+            bio: (c.bio as string) || '',
+            image: (c.photoUrl as string) || '/assets/images/player-placeholder.jpg',
+        }));
+    }
+} catch {
+    // Silent — static data already loaded
+}
 ---
 <div class="space-y-12">
     <!-- Coaches Grid - Championed with fixed card rendering -->
     <div class="grid lg:grid-cols-3 gap-8">
-        {academy.trainers.map((trainer, i) => (
+        {trainers.map((trainer, i) => (
             <div class="group relative">
                 <!-- Card with explicit border and cleaner edges -->
                 <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-white/[0.01] backdrop-blur-xl shadow-xl transition-all duration-500 hover:border-amber-500/40 hover:shadow-[0_0_30px_rgba(245,158,11,0.15)] h-full">
