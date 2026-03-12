@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.0] - 2026-03-12
+
+### 🏏 Summer Camp & Layout Optimization
+
+Focusing on highlighting the new Summer Camp program and optimizing hero space utility.
+
+### Added
+
+- **Hero Section** - New prominent "Seam Summer Camp" banner with 'Admissions Open' glow and detail lists.
+- **Programs** - Added "Arts & Dance" elegant tile to regular programs.
+- **Contact Form** - Embedded 'Seam Summer Camp' and 'Arts & Dance' naturally into program select options.
+
+### Changed
+
+- **Hero Layout** - Re-organized into an elegant side-by-side view (Summer camp left, actions right).
+- **Copy Updates** - Cleaned up redundant 'Launching Soon', renaming existing flow to 'Ongoing Programs'.
+- **Age Limits** - Expanded Summer Camp age demographic to 5-16 years.
+
+
 ## [2.2.0] - 2025-12-27
 
 ### 🏆 Gold Theme & UI Polish

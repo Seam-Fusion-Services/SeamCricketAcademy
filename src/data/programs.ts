@@ -11,10 +11,11 @@ export const programs = [
         newBatch: true
     },
     {
-        title: "Daily Weekday Batch",
-        desc: "Intensive daily morning training sessions.",
-        timing: "Mon-Fri: 7:00 AM - 8:30 AM",
-        icon: "🏏",
+        title: "Arts & Dance",
+        desc: "Exciting new programs to explore rhythm, movement, and creativity.",
+        ageGroup: "All Ages",
+        timing: "Flexible Timings",
+        icon: "🎭",
         featured: false,
         newBatch: true
     },
